@@ -1,47 +1,80 @@
 # ESTACIONAMENTO ACME WEB
 Situação de Aprendizagem - Full-stack (Node.JS, JavaSript, VsCode, ORM Prisma, Insomnia)
-## Contextualização
-O ESTACIONAMENTO ACME tem atuado em nossa cidade com ótimo atendimento e segurança, é nosso cliente e necessita de um sistema Web para registro dos estacionamentos diários.<br>O P.O. após uma visita ao cliente, elaborou o DER e UML DC(Diagrama de Classes) a seguir e elencou os requisitos funcionais.<br>
-![DER e DC](./docs/der-dc.png)
-## Desafios
-- 1 Faça **fork** deste repositório e clone na sua estação de trabalho.
-- 2 Desenvolva um sistema **WEB full-stack** conforme **regras de negócio, requisitos e casos de teste** a seguir.
-- 3 Faça commits constantes das suas atualizações, informando o que for feito
-- 4 Ao concluir faça um **pull request**
 
-### Regras de negócio
-- [RN001] Todos os **veículos** evem ser cadastrados em um banco de dados
-- [RN002] Neste momento não é necessário controle de acesso, pois o sistema será utilizado pelo somente **atendente** e instalado somente em seu computador.
-- [RN003] As vezes que o veículo estacionar será chamado de **estadia** e será atrelada ao veículo, na entrada a data de saída e o valor ficarão em branco, ao saír os campos saida e valorTotal deve ser gerados e calculados.
-- [RN004] O sistema deve possuir uma UI Web para o atendente cadastrar os veículos e as estadias.
+# Visual do site UML
+![site](./assets/site.png)
 
-### Requisitos funcionais
-- [RF001] O sistema deve permitir o CRUD de veículos.
-    - [RF001.1] Os campos cor e ano não são obrigatórios, podem ser nulos.
-    - [RF001.2] Ao enviar a placa de um veículo deve retornar os dados específicos e seus **estacionamentos**.
-- [RF002] O sistema deve permitir o CRUD de estadias (estacionamentos).
-    - [RF002.1] O sistema deve associar a estadia a um veículo.
-    - [RF002.2] Ao cadastrar uma nova estadia **create** no controller, a data e hora da **entrada** deve ser gerada pelo Banco de Dados @dedault(now()).
-    - [RF002.3] Ao cadastrar uma nova estadia **create** no controller, a **saida**, pode ser nula **"?"** pois será preenchida na rota **update** quando o veículo saír do estacionamento.
-    - [RF002.4] Ao cadastrar uma nova estadia **create** no controller, o **valorTotal**, deve ser nulo **"?"** pois será calculado na rota **update** quando o veículo saír do estacionamento.
-    - [RF002.5] Se ao realizar **update** o campo **saida** for enviado/preenchido o sistema deve calcular a **valorTotal** com a formula **"valorHora * (saida - entrada)"**.
+# Documentação UML
+Parte visual da arquiquetura
 
-### Requisitos não funcionais
-- [NF001] A API deve ser desenvolvida para responder tanto a UI Web como a futuros aplicativos.
-- [NF002] A UI pode ser desenvolvida com ou sem frameworks como bootstrap por exemplo.
-- [NF003] A documentação deve conter os três diagramas da UML [DC (Diagrama de Classes), DCU (Diagrama de Casos de Uso) e DA (Diagrama de Atividades)]
-- [NF004] O Reqdme.md principal do projeto deve conter esta documentação acrecida da lista das tecnologias utilizadas e um passo a passo de como executar e testar.
+# Diagrama de Atividades (da)
+![Atividades](./docs/atividades.png)
 
-### Casos de teste: Ponto a Ponto
-- [CT001] Deve ser cadastrado pelo menos 5 veículos.
-    - [CT001.1] Pelo menos dois veículos devem ter ano e cor cadastrados.
-- [CT002] Cadastre, altere e exclua um veículo.
-- [CT003] Cadastre uma estadia para cada veículo.
-    - [CT003.1] Pelo menos dois veículos devem ter duas ou mais Estadias cadastradas.
-- [CT004] Cadastre, altere e exclua uma estadia.
-- [CT005] Altere pelo menos duas estadias preenchendo a **saida** e verificando se calcula o **valorTotal**.
+# Diagrama de Casos de Uso (dcu)
+![Casos](./docs/casos.png)
 
-## Tecnologias
+# Diagrama de Classes (dc)
+![Casos](./docs/der-dc.png)
 
-## Passo a Passo de como executar e testar
 
+
+# Passo a passo
+- Clone e instale este repositório
+```bash
+git clone https://github.com/MoniqueBabler/Atividade-Fork_Estacionamento.git
+```
+
+
+- Crie um arquivo `.env` na raiz do projeto:
+
+```env
+PORT=3000
+DATABASE_URL="mysql://root@localhost:3306/mydb"
+```
+
+- Executar as migrations do banco de dados
+
+```bash
+npx prisma migrate dev
+```
+
+- Iniciar o servidor
+
+```bash
+npm run dev
+```
+
+O servidor estará disponível em `http://localhost:3000`.
+
+## Abrir o frontend
+
+Abra o arquivo `index.html` diretamente no navegador,  
+ou utilize uma extensão como o **Live Server** no VS Code.
+
+# Como Utilizar o Sistema
+
+### Cadastro de Veículos
+1. Abra o arquivo `index.html` no navegador.
+2. Preencha os dados do veículo:
+   - Placa
+   - Proprietário
+   - Tipo
+   - Modelo
+   - Marca
+   - Telefone
+3. Clique em **Cadastrar Veículo**.
+
+### Registro de Estadia
+1. Informe a placa de um veículo já cadastrado.
+2. Digite o valor cobrado por hora.
+3. Clique em **Registrar Estadia**.
+
+### Finalizar Estadia
+1. Localize a estadia ativa na tabela.
+2. Clique no botão **Finalizar**.
+3. O sistema calculará automaticamente o valor total da permanência.
+
+### Gerenciamento de Registros
+- Utilize os botões da tabela para:
+  - Editar informações
+  - Excluir registros
